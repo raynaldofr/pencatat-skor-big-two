@@ -365,22 +365,22 @@ const App = () => {
 
       {/* Custom Confirmation Modal (General) */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl text-gray-800 max-w-sm w-full mx-4">
-            <p className="mb-4 text-lg font-semibold text-center">{message}</p>
-            <div className="flex justify-end gap-3">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-6 rounded-xl shadow-2xl text-gray-800 max-w-sm w-full mx-auto transform scale-105 transition-transform duration-300 ease-out">
+            <p className="mb-6 text-lg font-semibold text-center text-gray-700">{message}</p>
+            <div className="flex justify-center gap-4">
               <button
                 onClick={() => {
                   setShowConfirmModal(false);
                   setMessage('');
                 }}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Batal
               </button>
               <button
                 onClick={confirmAction}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Konfirmasi
               </button>
@@ -391,38 +391,40 @@ const App = () => {
 
       {/* Chapter End Summary Modal */}
       {showChapterEndModal && chapterSummaries.length > 0 && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl text-gray-800 max-w-md w-full mx-4">
-            <h2 className="text-2xl font-bold text-center text-blue-700 mb-4">Babak {currentChapter} Berakhir!</h2>
-            <p className="text-center text-lg mb-4">Ringkasan Skor Babak {currentChapter}:</p>
-            <table className="min-w-full bg-white rounded-lg shadow-md mb-6">
-              <thead className="bg-blue-100 border-b border-blue-200">
-                <tr>
-                  <th className="py-2 px-3 text-left text-sm font-semibold text-blue-800 uppercase">Pemain</th>
-                  <th className="py-2 px-3 text-right text-sm font-semibold text-blue-800 uppercase">Skor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(chapterSummaries[chapterSummaries.length - 1].scores)
-                      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA) // Sort by score descending
-                      .map(([playerName, score]) => (
-                    <tr key={playerName} className="border-b border-gray-100 last:border-b-0">
-                      <td className="py-2 px-3 text-left text-gray-700">{playerName}</td>
-                      <td className="py-2 px-3 text-right text-gray-900 font-bold">{score}</td>
-                    </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="flex justify-center gap-4">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-6 rounded-xl shadow-2xl text-gray-800 max-w-md w-full mx-auto transform scale-105 transition-transform duration-300 ease-out">
+            <h2 className="text-3xl font-bold text-center text-blue-700 mb-4">Babak {currentChapter} Berakhir!</h2>
+            <p className="text-center text-lg mb-6 text-gray-700">Ringkasan Skor Babak {currentChapter}:</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="min-w-full bg-white rounded-lg shadow-md border border-gray-200">
+                <thead className="bg-blue-100 border-b border-blue-200">
+                  <tr>
+                    <th className="py-3 px-4 text-left text-sm font-semibold text-blue-800 uppercase tracking-wider rounded-tl-lg">Pemain</th>
+                    <th className="py-3 px-4 text-right text-sm font-semibold text-blue-800 uppercase tracking-wider rounded-tr-lg">Skor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(chapterSummaries[chapterSummaries.length - 1].scores)
+                        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA) // Sort by score descending
+                        .map(([playerName, score], index) => (
+                      <tr key={playerName} className={`${index % 2 === 0 ? 'bg-white' : 'bg-blue-50'} border-b border-gray-100 last:border-b-0`}>
+                        <td className="py-3 px-4 text-left text-gray-700 font-medium">{playerName}</td>
+                        <td className="py-3 px-4 text-right text-gray-900 font-bold text-lg">{score}</td>
+                      </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button
                 onClick={continueToNextChapter}
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out"
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Lanjutkan ke Babak {currentChapter + 1}
               </button>
               <button
                 onClick={resetGame} // Opsi untuk mereset seluruh permainan
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out"
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Akhiri Permainan
               </button>
@@ -434,11 +436,11 @@ const App = () => {
       {/* Rules Modal */}
       {showRulesModal && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-6 rounded-lg shadow-xl text-gray-800 max-w-2xl w-full mx-auto max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold text-center text-blue-700 mb-4">Aturan Permainan Big Two</h2>
-            <div className="text-sm leading-relaxed">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Pemenang (Tutup Kartu):</h3>
-              <ul className="list-disc list-inside mb-4">
+          <div className="bg-white p-6 rounded-xl shadow-2xl text-gray-800 max-w-2xl w-full mx-auto max-h-[90vh] overflow-y-auto transform scale-105 transition-transform duration-300 ease-out">
+            <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">Aturan Permainan Big Two</h2>
+            <div className="text-base leading-relaxed text-gray-700">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Pemenang (Tutup Kartu):</h3>
+              <ul className="list-disc list-inside mb-5 pl-4">
                 <li>**Tutup 1 Kartu:** +5 poin</li>
                 <li>**Tutup Pair (2 Kartu):** +10 poin</li>
                 <li>**Tutup 3 Kartu:** +15 poin</li>
@@ -446,22 +448,22 @@ const App = () => {
                 <li>**Tutup Dragon (13 Kartu Berurut):** +65 poin</li>
               </ul>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Bonus Kartu '2' dalam Set Pemenang (jika ada):</h3>
-              <ul className="list-disc list-inside mb-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Bonus Kartu '2' dalam Set Pemenang (jika ada):</h3>
+              <ul className="list-disc list-inside mb-5 pl-4">
                 <li>Ada 2 ♦ (Wajik): Tambah +5 poin</li>
                 <li>Ada 2 ♣ (Keriting): Tambah +7 poin</li>
                 <li>Ada 2 ♥ (Hati): Tambah +9 poin</li>
                 <li>Ada 2 ♠ (Skop): Tambah +11 poin</li>
               </ul>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Bonus Kartu Spesial (Tambahan Poin di Putaran Itu):</h3>
-              <ul className="list-disc list-inside mb-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Bonus Kartu Spesial (Tambahan Poin di Putaran Itu):</h3>
+              <ul className="list-disc list-inside mb-5 pl-4">
                 <li>**Royal Flush / Straight Flush:** Tambah +30 poin</li>
                 <li>**Four of a Kind:** Tambah +20 poin</li>
               </ul>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Poin Minus (Kalah - Berdasarkan Sisa Kartu Lawan):</h3>
-              <ol className="list-decimal list-inside mb-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Poin Minus (Kalah - Berdasarkan Sisa Kartu Lawan):</h3>
+              <ol className="list-decimal list-inside mb-5 pl-4">
                 <li>**Poin dari Kartu Non-Spesial:** Hitung jumlah kartu yang bukan merupakan kartu spesial (2 Wajik, 2 Keriting, 2 Hati, 2 Skop) yang tersisa di tangan. Setiap kartu ini bernilai -1 poin.</li>
                 <li>**Poin dari Kartu Spesial yang Tersisa:** Jika ada kartu spesial (2 Wajik, 2 Keriting, 2 Hati, 2 Skop) yang tersisa di tangan, kartu tersebut juga berkontribusi poin minus sesuai nilainya:
                   <ul className="list-disc list-inside ml-4">
@@ -486,7 +488,7 @@ const App = () => {
             <div className="flex justify-center mt-6">
               <button
                 onClick={() => setShowRulesModal(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Tutup
               </button>
@@ -495,27 +497,28 @@ const App = () => {
         </div>
       )}
 
-      <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-blue-700 mb-6">
-          <span role="img" aria-label="cards" className="mr-2">🃏</span> Pencatat Skor Big Two <br/>
-          <span className="text-xl font-semibold opacity-80">by : raynaldofr</span>
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 md:p-8 mb-8 border border-gray-100">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-blue-800 mb-4 drop-shadow-lg">
+          <span role="img" aria-label="cards" className="mr-2">🃏</span> Pencatat Skor Big Two
         </h1>
+        <p className="text-center text-lg text-gray-600 mb-6 font-semibold">by : raynaldofr</p>
 
         {/* Menu Bar for Rules */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-end mb-6">
             <button
                 onClick={() => setShowRulesModal(true)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full shadow-sm transition duration-300 ease-in-out"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-5 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2"
             >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book-open-text"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/><path d="M10 12H8"/><path d="M16 12h2"/><path d="M16 18h2"/><path d="M10 18H8"/></svg>
                 Lihat Aturan
             </button>
         </div>
 
         {!gameStarted ? (
           // Bagian Pengaturan Pemain
-          <div className="bg-purple-50 p-5 rounded-lg shadow-inner mb-6">
-            <h2 className="text-2xl font-semibold text-purple-600 mb-4">Pengaturan Pemain</h2>
-            <div className="flex flex-col sm:flex-row gap-3 mb-4">
+          <div className="bg-purple-50 p-6 rounded-xl shadow-inner mb-8 border border-purple-200">
+            <h2 className="text-2xl font-semibold text-purple-700 mb-5 text-center">Pengaturan Pemain</h2>
+            <div className="flex flex-col sm:flex-row gap-4 mb-5">
               <input
                 type="text"
                 placeholder="Nama Pemain Baru"
@@ -526,11 +529,11 @@ const App = () => {
                     addPlayer();
                   }
                 }}
-                className="flex-grow p-3 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 transition duration-150 ease-in-out"
+                className="flex-grow p-3 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500 transition duration-200 ease-in-out shadow-sm outline-none"
               />
               <button
                 onClick={addPlayer}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
               >
                 Tambah Pemain
               </button>
@@ -538,14 +541,14 @@ const App = () => {
 
             {players.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-xl font-semibold text-purple-600 mb-3">Daftar Pemain:</h3>
-                <ul className="space-y-2">
+                <h3 className="text-xl font-semibold text-purple-700 mb-3">Daftar Pemain:</h3>
+                <ul className="space-y-3">
                   {players.map(player => (
-                    <li key={player.id} className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-purple-200">
-                      <span className="text-gray-700 font-medium">{player.name}</span>
+                    <li key={player.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-purple-100 transition-all duration-200 hover:shadow-md">
+                      <span className="text-gray-800 font-medium text-lg">{player.name}</span>
                       <button
                         onClick={() => removePlayer(player.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-3 rounded-lg transition duration-300 ease-in-out"
+                        className="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                       >
                         Hapus
                       </button>
@@ -557,7 +560,7 @@ const App = () => {
 
             <button
               onClick={startGame}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               disabled={players.length < 2}
             >
               Mulai Permainan
@@ -566,29 +569,32 @@ const App = () => {
         ) : (
           // Bagian Input Hasil Putaran dan Papan Skor (Setelah Game Dimulai)
           <>
-            <div className="text-center text-lg font-semibold text-blue-700 mb-4">
+            <div className="text-center text-xl font-bold text-blue-700 mb-6 p-3 bg-blue-100 rounded-lg shadow-md">
               Babak: {currentChapter} | Putaran: {currentRound}/13
             </div>
 
             {/* Bagian Input Hasil Putaran */}
-            <div className="bg-blue-50 p-5 rounded-lg shadow-inner mb-6">
-              <h2 className="text-2xl font-semibold text-blue-600 mb-4">Input Hasil Putaran</h2>
+            <div className="bg-blue-50 p-6 rounded-xl shadow-inner mb-8 border border-blue-200">
+              <h2 className="text-2xl font-semibold text-blue-700 mb-5 text-center">Input Hasil Putaran</h2>
 
               {/* Pemilihan Pemenang - Menggunakan Radio Button */}
-              <div className="mb-4">
-                <label className="block text-lg font-medium text-gray-700 mb-2">Pemenang Putaran:</label>
+              <div className="mb-5">
+                <label className="block text-lg font-medium text-gray-700 mb-3">Pemenang Putaran:</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {players.map(player => (
-                    <label key={player.id} className="flex items-center bg-white bg-opacity-70 px-4 py-2 rounded-full cursor-pointer hover:bg-opacity-90 transition-colors shadow-sm">
+                    <label key={player.id} className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                       <input
                         type="radio"
                         name="winner"
                         value={player.id}
                         checked={winnerId === player.id}
                         onChange={(e) => setWinnerId(e.target.value)}
-                        className="form-radio h-5 w-5 text-blue-600 focus:ring-blue-500"
+                        className="hidden" // Sembunyikan radio button asli
                       />
-                      <span className="ml-2 text-gray-800 font-medium">{player.name}</span>
+                      <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                        {winnerId === player.id && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                      </span>
+                      <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">{player.name}</span>
                     </label>
                   ))}
                 </div>
@@ -597,131 +603,164 @@ const App = () => {
               {winnerId && (
                 <>
                   {/* Cara Pemenang Menutup Kartu */}
-                  <div className="mb-4">
-                    <label className="block text-lg font-medium text-gray-700 mb-2">Pemenang Menutup Dengan:</label>
-                    <div className="flex flex-wrap gap-3">
-                      <label className="inline-flex items-center">
+                  <div className="mb-5">
+                    <label className="block text-lg font-medium text-gray-700 mb-3">Pemenang Menutup Dengan:</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <label className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="radio"
                           name="closingType"
                           value="1_card"
                           checked={winnerClosingType === '1_card'}
                           onChange={(e) => setWinnerClosingType(e.target.value)}
-                          className="form-radio h-5 w-5 text-blue-600 rounded-full"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">1 Kartu (+5 Poin)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                          {winnerClosingType === '1_card' && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">1 Kartu (+5)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="radio"
                           name="closingType"
                           value="pair"
                           checked={winnerClosingType === 'pair'}
                           onChange={(e) => setWinnerClosingType(e.target.value)}
-                          className="form-radio h-5 w-5 text-blue-600 rounded-full"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">2 Kartu (Pair) (+10 Poin)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                          {winnerClosingType === 'pair' && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 Kartu (Pair) (+10)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="radio"
                           name="closingType"
                           value="3_cards"
                           checked={winnerClosingType === '3_cards'}
                           onChange={(e) => setWinnerClosingType(e.target.value)}
-                          className="form-radio h-5 w-5 text-blue-600 rounded-full"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">3 Kartu (+15 Poin)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                          {winnerClosingType === '3_cards' && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">3 Kartu (+15)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="radio"
                           name="closingType"
                           value="set_5"
                           checked={winnerClosingType === 'set_5'}
                           onChange={(e) => setWinnerClosingType(e.target.value)}
-                          className="form-radio h-5 w-5 text-blue-600 rounded-full"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">5 Kartu (Set) (+25 Poin)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                          {winnerClosingType === 'set_5' && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">5 Kartu (Set) (+25)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center justify-center bg-white bg-opacity-80 px-4 py-3 rounded-full cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="radio"
                           name="closingType"
                           value="dragon"
                           checked={winnerClosingType === 'dragon'}
                           onChange={(e) => setWinnerClosingType(e.target.value)}
-                          className="form-radio h-5 w-5 text-blue-600 rounded-full"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">13 Kartu (Dragon) (+65 Poin)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-full mr-2">
+                          {winnerClosingType === 'dragon' && <span className="absolute w-3 h-3 bg-white rounded-full"></span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">13 Kartu (Dragon) (+65)</span>
                       </label>
                     </div>
                   </div>
 
                   {/* Bonus Kartu '2' dalam Set Pemenang */}
-                  <div className="mb-4">
-                    <label className="block text-lg font-medium text-gray-700 mb-2">Bonus Kartu '2' dalam Set Pemenang:</label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      <label className="inline-flex items-center">
+                  <div className="mb-5">
+                    <label className="block text-lg font-medium text-gray-700 mb-3">Bonus Kartu '2' dalam Set Pemenang:</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerBonus2s.diamond2}
                           onChange={(e) => setWinnerBonus2s({ ...winnerBonus2s, diamond2: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">2 Wajik (+5)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerBonus2s.diamond2 && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♦ (+5)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerBonus2s.club2}
                           onChange={(e) => setWinnerBonus2s({ ...winnerBonus2s, club2: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">2 Keriting (+7)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerBonus2s.club2 && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="ml-2 text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♣ (+7)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerBonus2s.heart2}
                           onChange={(e) => setWinnerBonus2s({ ...winnerBonus2s, heart2: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">2 Hati (+9)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerBonus2s.heart2 && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="ml-2 text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♥ (+9)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerBonus2s.spade2}
                           onChange={(e) => setWinnerBonus2s({ ...winnerBonus2s, spade2: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">2 Skop (+11)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerBonus2s.spade2 && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="ml-2 text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♠ (+11)</span>
                       </label>
                     </div>
                   </div>
 
                   {/* Bonus Kartu Spesial */}
-                  <div className="mb-4">
-                    <label className="block text-lg font-medium text-gray-700 mb-2">Bonus Kartu Spesial:</label>
-                    <div className="flex flex-wrap gap-3">
-                      <label className="inline-flex items-center">
+                  <div className="mb-5">
+                    <label className="block text-lg font-medium text-gray-700 mb-3">Bonus Kartu Spesial:</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerSpecialHands.royalStraightFlush}
                           onChange={(e) => setWinnerSpecialHands({ ...winnerSpecialHands, royalStraightFlush: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">Royal/Straight Flush (+30)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerSpecialHands.royalStraightFlush && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="ml-2 text-gray-800 font-medium text-base has-[:checked]:text-white">Royal/Straight Flush (+30)</span>
                       </label>
-                      <label className="inline-flex items-center">
+                      <label className="flex items-center bg-white bg-opacity-80 px-4 py-3 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-blue-500 has-[:checked]:text-white has-[:checked]:border-blue-600 has-[:checked]:shadow-md">
                         <input
                           type="checkbox"
                           checked={winnerSpecialHands.fourOfAKind}
                           onChange={(e) => setWinnerSpecialHands({ ...winnerSpecialHands, fourOfAKind: e.target.checked })}
-                          className="form-checkbox h-5 w-5 text-blue-600 rounded"
+                          className="hidden"
                         />
-                        <span className="ml-2 text-gray-800">Four of a Kind (+20)</span>
+                        <span className="relative flex items-center justify-center w-5 h-5 border-2 border-blue-400 rounded-md mr-2">
+                          {winnerSpecialHands.fourOfAKind && <span className="absolute text-white text-xs">✔</span>}
+                        </span>
+                        <span className="ml-2 text-gray-800 font-medium text-base has-[:checked]:text-white">Four of a Kind (+20)</span>
                       </label>
                     </div>
                   </div>
@@ -729,19 +768,19 @@ const App = () => {
               )}
 
               {/* Input Kartu Sisa Pemain yang Kalah */}
-              <h3 className="text-xl font-semibold text-blue-600 mb-3 mt-6">Kartu Sisa Pemain yang Kalah:</h3>
+              <h3 className="text-2xl font-semibold text-blue-700 mb-4 mt-8 text-center">Kartu Sisa Pemain yang Kalah:</h3>
               {players.filter(p => p.id !== winnerId).map(player => (
-                <div key={player.id} className="bg-white p-4 rounded-lg shadow-sm mb-4 border border-blue-200">
-                  <h4 className="text-lg font-medium text-gray-700 mb-3">{player.name}</h4>
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                    <div className="flex-grow">
-                      <label htmlFor={`remaining-cards-${player.id}`} className="block text-sm font-medium text-gray-600 mb-1">
+                <div key={player.id} className="bg-white p-5 rounded-xl shadow-md mb-6 border border-blue-100">
+                  <h4 className="text-xl font-medium text-gray-800 mb-4">{player.name}</h4>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                    <div className="flex-grow w-full">
+                      <label htmlFor={`remaining-cards-${player.id}`} className="block text-base font-medium text-gray-700 mb-2">
                         Jumlah Kartu Sisa:
                       </label>
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2">
                         <button
                           onClick={() => adjustRemainingCards(player.id, -1)}
-                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-md transition-colors"
+                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition-colors shadow-sm"
                         >
                           -
                         </button>
@@ -752,23 +791,23 @@ const App = () => {
                           max="13"
                           value={loserInputs[player.id]?.remainingCards || 0}
                           onChange={(e) => handleRemainingCardsChange(player.id, e.target.value)}
-                          className="w-16 text-center p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                          className="w-20 text-center p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 outline-none text-lg font-bold"
                         />
                         <button
                           onClick={() => adjustRemainingCards(player.id, 1)}
-                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-md transition-colors"
+                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition-colors shadow-sm"
                         >
                           +
                         </button>
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 mt-3">
                         {[0, 5, 10, 13].map(count => (
                           <button
                             key={count}
                             onClick={() => handleRemainingCardsChange(player.id, count)}
-                            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm ${
                               parseInt(loserInputs[player.id]?.remainingCards) === count
-                                ? 'bg-blue-500 text-white'
+                                ? 'bg-blue-500 text-white hover:bg-blue-600'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                             }`}
                           >
@@ -777,10 +816,10 @@ const App = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="flex-shrink-0">
-                      <label className="block text-sm font-medium text-gray-600 mb-1">Kartu '2' yang Tersisa:</label>
-                      <div className="grid grid-cols-2 gap-x-2 gap-y-1">
-                        <label className="inline-flex items-center text-sm">
+                    <div className="flex-shrink-0 w-full sm:w-auto mt-4 sm:mt-0">
+                      <label className="block text-base font-medium text-gray-700 mb-2">Kartu '2' yang Tersisa:</label>
+                      <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                        <label className="flex items-center text-sm bg-white bg-opacity-80 px-3 py-2 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-red-500 has-[:checked]:text-white has-[:checked]:border-red-600 has-[:checked]:shadow-md">
                           <input
                             type="checkbox"
                             checked={loserInputs[player.id]?.bonus2s.diamond2 || false}
@@ -791,11 +830,14 @@ const App = () => {
                                 bonus2s: { ...loserInputs[player.id]?.bonus2s, diamond2: e.target.checked }
                               }
                             })}
-                            className="form-checkbox h-4 w-4 text-red-500 rounded"
+                            className="hidden"
                           />
-                          <span className="ml-1 text-gray-700">2 Wajik (-5)</span>
+                          <span className="relative flex items-center justify-center w-5 h-5 border-2 border-red-400 rounded-md mr-2">
+                            {loserInputs[player.id]?.bonus2s.diamond2 && <span className="absolute text-white text-xs">✔</span>}
+                          </span>
+                          <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♦ (-5)</span>
                         </label>
-                        <label className="inline-flex items-center text-sm">
+                        <label className="flex items-center text-sm bg-white bg-opacity-80 px-3 py-2 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-green-500 has-[:checked]:text-white has-[:checked]:border-green-600 has-[:checked]:shadow-md">
                           <input
                             type="checkbox"
                             checked={loserInputs[player.id]?.bonus2s.club2 || false}
@@ -806,11 +848,14 @@ const App = () => {
                                 bonus2s: { ...loserInputs[player.id]?.bonus2s, club2: e.target.checked }
                               }
                             })}
-                            className="form-checkbox h-4 w-4 text-green-500 rounded"
+                            className="hidden"
                           />
-                          <span className="ml-1 text-gray-700">2 Keriting (-7)</span>
+                          <span className="relative flex items-center justify-center w-5 h-5 border-2 border-green-400 rounded-md mr-2">
+                            {loserInputs[player.id]?.bonus2s.club2 && <span className="absolute text-white text-xs">✔</span>}
+                          </span>
+                          <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♣ (-7)</span>
                         </label>
-                        <label className="inline-flex items-center text-sm">
+                        <label className="flex items-center text-sm bg-white bg-opacity-80 px-3 py-2 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-red-600 has-[:checked]:text-white has-[:checked]:border-red-700 has-[:checked]:shadow-md">
                           <input
                             type="checkbox"
                             checked={loserInputs[player.id]?.bonus2s.heart2 || false}
@@ -821,11 +866,14 @@ const App = () => {
                                 bonus2s: { ...loserInputs[player.id]?.bonus2s, heart2: e.target.checked }
                               }
                             })}
-                            className="form-checkbox h-4 w-4 text-red-600 rounded"
+                            className="hidden"
                           />
-                          <span className="ml-1 text-gray-700">2 Hati (-9)</span>
+                          <span className="relative flex items-center justify-center w-5 h-5 border-2 border-red-500 rounded-md mr-2">
+                            {loserInputs[player.id]?.bonus2s.heart2 && <span className="absolute text-white text-xs">✔</span>}
+                          </span>
+                          <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♥ (-9)</span>
                         </label>
-                        <label className="inline-flex items-center text-sm">
+                        <label className="flex items-center text-sm bg-white bg-opacity-80 px-3 py-2 rounded-lg cursor-pointer hover:bg-opacity-100 transition-colors shadow-sm border border-gray-200 has-[:checked]:bg-gray-800 has-[:checked]:text-white has-[:checked]:border-gray-900 has-[:checked]:shadow-md">
                           <input
                             type="checkbox"
                             checked={loserInputs[player.id]?.bonus2s.spade2 || false}
@@ -836,9 +884,12 @@ const App = () => {
                                 bonus2s: { ...loserInputs[player.id]?.bonus2s, spade2: e.target.checked }
                               }
                             })}
-                            className="form-checkbox h-4 w-4 text-gray-800 rounded"
+                            className="hidden"
                           />
-                          <span className="ml-1 text-gray-700">2 Skop (-11)</span>
+                          <span className="relative flex items-center justify-center w-5 h-5 border-2 border-gray-600 rounded-md mr-2">
+                            {loserInputs[player.id]?.bonus2s.spade2 && <span className="absolute text-white text-xs">✔</span>}
+                          </span>
+                          <span className="text-gray-800 font-medium text-base has-[:checked]:text-white">2 ♠ (-11)</span>
                         </label>
                       </div>
                     </div>
@@ -847,16 +898,16 @@ const App = () => {
               ))}
 
               {/* Tombol Aksi */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-6">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
                 <button
                   onClick={applyRoundScores}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   Hitung & Tambah Skor
                 </button>
                 <button
                   onClick={resetRoundForm}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                  className="flex-1 bg-gradient-to-r from-gray-300 to-gray-400 hover:from-gray-400 hover:to-gray-500 text-gray-800 font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                 >
                   Reset Form
                 </button>
@@ -864,10 +915,10 @@ const App = () => {
             </div>
 
             {/* Bagian Tabel Skor */}
-            <div className="bg-green-50 p-5 rounded-lg shadow-inner">
-              <h2 className="text-2xl font-semibold text-green-700 mb-4">Papan Skor</h2>
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white rounded-lg shadow-md">
+            <div className="bg-green-50 p-6 rounded-xl shadow-2xl border border-green-200">
+              <h2 className="text-3xl font-bold text-green-700 mb-5 text-center">Papan Skor</h2>
+              <div className="overflow-x-auto rounded-lg shadow-md border border-gray-200">
+                <table className="min-w-full bg-white">
                   <thead className="bg-green-100 border-b border-green-200">
                     <tr>
                       <th className="py-3 px-4 text-left text-sm font-semibold text-green-800 uppercase tracking-wider rounded-tl-lg">Pemain</th>
@@ -876,9 +927,9 @@ const App = () => {
                   </thead>
                   <tbody>
                     {players.sort((a, b) => b.score - a.score).map((player, index) => (
-                      <tr key={player.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-green-50'} border-b border-green-100 last:border-b-0`}>
-                        <td className="py-3 px-4 text-left text-gray-700 font-medium">{player.name}</td>
-                        <td className="py-3 px-4 text-right text-gray-900 font-bold text-lg">{player.score}</td>
+                      <tr key={player.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-green-50'} border-b border-gray-100 last:border-b-0 transition-all duration-150 hover:bg-green-100`}>
+                        <td className="py-3 px-4 text-left text-gray-700 font-medium text-lg">{player.name}</td>
+                        <td className="py-3 px-4 text-right text-gray-900 font-extrabold text-2xl">{player.score}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -887,14 +938,14 @@ const App = () => {
 
               {/* Ringkasan Skor Babak Sebelumnya */}
               {chapterSummaries.length > 0 && (
-                <div className="mt-8">
-                  <h3 className="text-xl font-semibold text-green-700 mb-3">Riwayat Babak:</h3>
+                <div className="mt-8 bg-white p-5 rounded-xl shadow-md border border-gray-200">
+                  <h3 className="text-2xl font-semibold text-green-700 mb-4 text-center">Riwayat Babak:</h3>
                   {chapterSummaries.map((summary, index) => (
-                    <div key={index} className="bg-white p-4 rounded-lg shadow-sm mb-4 border border-green-200">
+                    <div key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm mb-4 border border-gray-100 last:mb-0">
                       <h4 className="text-lg font-bold text-green-800 mb-2">Babak {summary.chapter}</h4>
-                      <ul className="list-disc list-inside">
+                      <ul className="list-disc list-inside space-y-1">
                         {Object.entries(summary.scores).map(([playerName, score]) => (
-                          <li key={playerName} className="text-gray-700">{playerName}: <span className="font-semibold">{score}</span></li>
+                          <li key={playerName} className="text-gray-700 text-base">{playerName}: <span className="font-semibold">{score}</span></li>
                         ))}
                       </ul>
                     </div>
@@ -904,7 +955,7 @@ const App = () => {
 
               <button
                 onClick={resetGame}
-                className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                className="mt-8 w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
               >
                 Reset Permainan
               </button>
